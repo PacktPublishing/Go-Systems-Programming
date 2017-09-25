@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Using Go HTML Templates</title>
+	<style>
+		html {
+			font-size: 16px;
+		}
+		table, th, td {
+		    border: 3px solid gray;
+		}
+	</style>
+</head>
+<body>
+
+<h2 alight="center">Presenting Dynamic content!</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Web Site</th>
+			<th>Quality</th>
+		</tr>
+	</thead>
+	<tbody>
+{{ range . }}
+<tr>
+	<td> <a href="{{ .WebSite }}">{{ .WebName }}</a> </td>
+	<td> {{ .Quality }} </td>
+</tr>
+{{ end }}
+	</tbody>
+</table>
+
+</body>
+</html>
