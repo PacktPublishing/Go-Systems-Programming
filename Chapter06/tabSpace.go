@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"io"
 	"os"
+	"fmt"
 	"path/filepath"
+	"bufio"
+	"io"
 	"strings"
 )
 
@@ -14,17 +14,10 @@ func main() {
 		fmt.Printf("Usage: %s [-t|-s] filename!\n", filepath.Base(os.Args[0]))
 		os.Exit(1)
 	}
-	convertTabs := false
-	convertSpaces := false
-	newLine := ""
 
 	option := os.Args[1]
 	filename := os.Args[2]
-	if option == "-t" {
-		convertTabs = true
-	} else if option == "-s" {
-		convertSpaces = true
-	} else {
+	if option != "-t" && option != "-s" {
 		fmt.Println("Unknown option!")
 		os.Exit(1)
 	}
@@ -41,17 +34,21 @@ func main() {
 		line, err := r.ReadString('\n')
 
 		if err == io.EOF {
+			outputNewLine(option, line)
 			break
 		} else if err != nil {
 			fmt.Printf("error reading file %s", err)
 			os.Exit(1)
 		}
 
-		if convertTabs == true {
-			newLine = strings.Replace(line, "\t", "    ", -1)
-		} else if convertSpaces == true {
-			newLine = strings.Replace(line, "    ", "\t", -1)
-		}
-		fmt.Print(newLine)
+		outputNewLine(option,line)
+	}
+}
+
+func outputNewLine(option, line string) {
+	if option == "-t" {
+		fmt.Print(strings.Replace(line, "\t", "    ", -1))
+	}else {
+		fmt.Print(strings.Replace(line, "    ", "\t", -1))
 	}
 }
