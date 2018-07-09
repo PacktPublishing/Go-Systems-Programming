@@ -30,6 +30,9 @@ func countLines(filename string) (int, int, int) {
 		line, err := r.ReadString('\n')
 
 		if err == io.EOF {
+			numberOfCharacters += len(line)
+			r := regexp.MustCompile("[^\\s]+")
+			numberOfWords += len(r.FindAllString(line, -1))
 			break
 		} else if err != nil {
 			fmt.Printf("error reading file %s", err)
